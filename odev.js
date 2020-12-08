@@ -5,13 +5,13 @@
 
 var person = {
   name: "John",
-  message: function () {    
+  message: function () {
     console.log("Hello, " + this.name)
   }
 }
 
 var messageFunc = person.message
-messageFunc();
+messageFunc.call(person)
 
 
 /*  
@@ -23,16 +23,16 @@ messageFunc();
   sonuclarini yazdiracak sekilde duzenleyiniz.
 */
 var numbers = {
-  numbers: [[10,20,30], 2],
-  multiply: function(){
-    this.numbers[0].map(function(number, numberIndex){
-        const result = number * this.numbers[1];
-        console.log(result)
-    })
+  numbers: [[10, 20, 30], 2],
+  multiply: function () {
+    this.numbers[0].map(function (number, numberIndex) {
+      const result = number * this.numbers[1];
+      console.log(result)
+    }.bind(this))
   }
 };
 
-numbers.multiply();
+numbers.multiply()
 
 
 /* 
@@ -42,9 +42,11 @@ numbers.multiply();
   Ornek : isValidName("John") true donmeli
   Ornek : isValidName(" J ohn") false donmeli
 */
-function isValidName(name){
-
+function isValidName(name) {
+  const regex = /^\S+$/;
+  return regex.test(name);
 }
+console.log(isValidName("John"))
 
 /*
   Odev 4:
@@ -58,8 +60,17 @@ function isValidName(name){
   Ornek: katilimSaati("3", 20) 60 sonucunu vermelidir.
   Ornek: katilimSaati("5", "30") 150 sonucunu vermelidir.
 */
-function katilimSaati(dersSayisi, dersSuresi){
-
+function katilimSaati(dersSayisi, dersSuresi) {
+  if (Number.isNaN(+dersSayisi) || Number.isNaN(+dersSuresi)) throw new Error('Invalid arguments');
+  if (!Number.isFinite(+dersSayisi) || !Number.isFinite(+dersSuresi)) throw new Error('Infinite arguments');
+  return dersSayisi * dersSuresi;
 }
 
+console.log(katilimSaati(3, 30))
+console.log(katilimSaati("3", 20))
+console.log(katilimSaati("5", "30"))
+// console.log(katilimSaati(null, null))
+// console.log(katilimSaati(undefined, undefined))
+// console.log(katilimSaati(Infinity, Infinity))
+// console.log(katilimSaati(undefined, Infinity))
 
