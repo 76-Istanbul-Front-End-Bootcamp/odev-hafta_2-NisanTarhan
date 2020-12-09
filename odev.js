@@ -13,7 +13,6 @@ var person = {
 var messageFunc = person.message
 messageFunc.call(person)
 
-
 /*  
   Odev 2:
   Asagidaki fonksiyonu sirasiyla 
@@ -42,11 +41,25 @@ numbers.multiply()
   Ornek : isValidName("John") true donmeli
   Ornek : isValidName(" J ohn") false donmeli
 */
+
+"Nisan Ercan Tarhan".includes(" ")
+"Nisan Ercan Tarhan".split(" ")
 function isValidName(name) {
-  const regex = /^\S+$/;
-  return regex.test(name);
+  if (typeof name !== "string") return false;
+  if (name.length === 0 || name.length === 1 || Number(name) === 0) return false;
+  const splittedArray = name.trim().split(" ")
+  return !splittedArray.some(item => item.length === 1);
 }
-console.log(isValidName("John"))
+
+console.log("ÖDEV 3 TEST RESULT");
+// console.log(isValidName("Nisan Ercan Tarhan"))
+console.log(isValidName("Frank") === true);
+console.log(isValidName(false) === false);
+console.log(isValidName(null) === false);
+console.log(isValidName(undefined) === false);
+console.log(isValidName("") === false);
+console.log(isValidName("  \t\n") === false);
+console.log(isValidName("X") === false);
 
 /*
   Odev 4:
@@ -61,16 +74,34 @@ console.log(isValidName("John"))
   Ornek: katilimSaati("5", "30") 150 sonucunu vermelidir.
 */
 function katilimSaati(dersSayisi, dersSuresi) {
-  if (Number.isNaN(+dersSayisi) || Number.isNaN(+dersSuresi)) throw new Error('Invalid arguments');
-  if (!Number.isFinite(+dersSayisi) || !Number.isFinite(+dersSuresi)) throw new Error('Infinite arguments');
+  if (dersSayisi == null || dersSuresi == null) return false;
+  if (typeof dersSayisi === "boolean" || typeof dersSuresi === "boolean") return false;
+  if (typeof dersSayisi === "string" && dersSayisi.length === 0) return false;
+  if (typeof dersSuresi === "string" && dersSuresi.length === 0) return false;
+  if (Number.isNaN(+dersSayisi) || Number.isNaN(+dersSuresi)) return false;
+  if (!Number.isFinite(+dersSayisi) || !Number.isFinite(+dersSuresi)) return false;
   return dersSayisi * dersSuresi;
 }
 
-console.log(katilimSaati(3, 30))
-console.log(katilimSaati("3", 20))
-console.log(katilimSaati("5", "30"))
-// console.log(katilimSaati(null, null))
-// console.log(katilimSaati(undefined, undefined))
-// console.log(katilimSaati(Infinity, Infinity))
-// console.log(katilimSaati(undefined, Infinity))
-
+console.log("ÖDEV 4 TEST RESULT");
+console.log(!!katilimSaati(6, 10) == true);
+console.log(!!katilimSaati(6, "10") == true);
+console.log(!!katilimSaati("6", 10) == true);
+console.log(!!katilimSaati("6", "10") == true);
+console.log(katilimSaati("", 6) === false);
+console.log(katilimSaati(6, "") === false);
+console.log(katilimSaati("", "") === false);
+console.log(katilimSaati("foo", 6) === false);
+console.log(katilimSaati(6, "foo") === false);
+console.log(katilimSaati("foo", "bar") === false);
+console.log(katilimSaati(null, null) === false);
+console.log(katilimSaati(null, undefined) === false);
+console.log(katilimSaati(undefined, null) === false);
+console.log(katilimSaati(undefined, undefined) === false);
+console.log(katilimSaati(Infinity, Infinity) === false);
+console.log(katilimSaati(undefined, Infinity) === false);
+console.log(katilimSaati(Infinity, undefined) === false);
+console.log(katilimSaati(false, false) === false);
+console.log(katilimSaati(false, true) === false);
+console.log(katilimSaati(true, false) === false);
+console.log(katilimSaati(true, true) === false);
